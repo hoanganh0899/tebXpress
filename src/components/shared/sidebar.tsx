@@ -1,6 +1,6 @@
-import { navItems } from '@/constants/data';
-import DashboardNav from './dashboard-nav';
-import { Link } from 'react-router-dom';
+import { navItems } from "@/constants/data";
+import DashboardNav from "./dashboard-nav";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   return (

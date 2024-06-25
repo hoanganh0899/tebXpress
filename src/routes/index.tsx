@@ -1,22 +1,23 @@
-import NotFound from '@/pages/not-found';
-import { Suspense, lazy } from 'react';
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import NotFound from "@/pages/not-found";
+import { Suspense, lazy } from "react";
+import { Navigate, Outlet, useRoutes } from "react-router-dom";
 
 const DashboardLayout = lazy(
-  () => import('@/components/layout/dashboard-layout')
+  () => import("@/components/layout/dashboard-layout")
 );
-const SignInPage = lazy(() => import('@/pages/auth/signin'));
-const SignUp = lazy(() => import('@/pages/auth/signup'));
-const DashboardPage = lazy(() => import('@/pages/dashboard'));
-const OrderPage = lazy(() => import('@/pages/orders'));
-const OrderDetailPage = lazy(() => import('@/pages/orders/OrderDetailPage'));
+const SignInPage = lazy(() => import("@/pages/auth/signin"));
+const SignUp = lazy(() => import("@/pages/auth/signup"));
+const Account = lazy(() => import("@/pages/account"));
+const DashboardPage = lazy(() => import("@/pages/dashboard"));
+const OrderPage = lazy(() => import("@/pages/orders"));
+const OrderDetailPage = lazy(() => import("@/pages/orders/OrderDetailPage"));
 
 // ----------------------------------------------------------------------
 
 export default function AppRouter() {
   const dashboardRoutes = [
     {
-      path: '/',
+      path: "/",
       element: (
         <DashboardLayout>
           <Suspense>
@@ -27,39 +28,43 @@ export default function AppRouter() {
       children: [
         {
           element: <DashboardPage />,
-          index: true
+          index: true,
         },
         {
-          path: 'order',
-          element: <OrderPage />
+          path: "order",
+          element: <OrderPage />,
         },
         {
-          path: 'student/details',
-          element: <OrderDetailPage />
-        }
-      ]
-    }
+          path: "student/details",
+          element: <OrderDetailPage />,
+        },
+        {
+          path: "/account",
+          element: <Account />,
+        },
+      ],
+    },
   ];
 
   const publicRoutes = [
     {
-      path: '/login',
+      path: "/login",
       element: <SignInPage />,
-      index: true
+      index: true,
     },
     {
-      path: '/signup',
+      path: "/signup",
       element: <SignUp />,
-      index: true
+      index: true,
     },
     {
-      path: '/404',
-      element: <NotFound />
+      path: "/404",
+      element: <NotFound />,
     },
     {
-      path: '*',
-      element: <Navigate to="/404" replace />
-    }
+      path: "*",
+      element: <Navigate to="/404" replace />,
+    },
   ];
 
   const routes = useRoutes([...dashboardRoutes, ...publicRoutes]);

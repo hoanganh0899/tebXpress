@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,8 +8,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function UserNav() {
   return (
@@ -17,7 +17,7 @@ export default function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-14 w-14 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={'../../../a51353ecb6f056ae0fe1.jpg'} alt={''} />
+            <AvatarImage src={"../../../a51353ecb6f056ae0fe1.jpg"} alt={""} />
             <AvatarFallback>hello</AvatarFallback>
           </Avatar>
         </Button>
@@ -25,15 +25,15 @@ export default function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{'Admin'}</p>
+            <p className="text-sm font-medium leading-none">{"Admin"}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {'admin@gmail.com'}
+              {"admin@gmail.com"}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => (window.location.href = "/account")}>
             Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
@@ -45,10 +45,9 @@ export default function UserNav() {
             Settings
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => console.log('logout')}>
+        <DropdownMenuItem onClick={() => console.log("logout")}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

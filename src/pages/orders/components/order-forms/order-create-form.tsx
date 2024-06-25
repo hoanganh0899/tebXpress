@@ -1,39 +1,40 @@
-import Heading from '@/components/shared/heading';
-import { Button } from '@/components/ui/button';
+import Heading from "@/components/shared/heading";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
-} from '@/components/ui/form';
+  FormMessage,
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
-import { CirclePlus } from 'lucide-react';
-import { useState } from 'react';
-const studentFormSchema = z.object({
-  firstname: z.string().min(1, { message: 'firstname is required' }),
-  recipientName: z.string().min(1, { message: 'recipientName is required' }),
-  invoiceName: z.string().min(1, { message: 'invoiceName is required' }),
-  phone: z.string().min(1, { message: 'phone is required' }),
-  orderValue: z.string().min(1, { message: 'orderValue is required' }),
-  address: z.string().min(1, { message: 'address is required' }),
-  city: z.string().min(1, { message: 'City is required' }),
-  state: z.string().min(1, { message: 'State is required' }),
-  country: z.string().min(1, { message: 'Country is required' }),
-  nameProduct: z.string().min(1, { message: 'Product is required' })
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { CirclePlus } from "lucide-react";
+import { useState } from "react";
+
+const orderFormSchema = z.object({
+  firstname: z.string().min(1, { message: "firstname is required" }),
+  recipientName: z.string().min(1, { message: "recipientName is required" }),
+  invoiceName: z.string().min(1, { message: "invoiceName is required" }),
+  phone: z.string().min(1, { message: "phone is required" }),
+  orderValue: z.string().min(1, { message: "orderValue is required" }),
+  address: z.string().min(1, { message: "address is required" }),
+  city: z.string().min(1, { message: "City is required" }),
+  state: z.string().min(1, { message: "State is required" }),
+  country: z.string().min(1, { message: "Country is required" }),
+  nameProduct: z.string().min(1, { message: "Product is required" }),
   // confirmPassword: z
   //   .string()
   //   .min(1, { message: 'Confirm Password is required' })
@@ -43,9 +44,19 @@ const studentFormSchema = z.object({
 //   path: ['confirmPassword']
 // });
 
-type StudentFormSchemaType = z.infer<typeof studentFormSchema>;
+type OrderFormSchemaType = z.infer<typeof orderFormSchema>;
 
-const ProductForm = ({ control, index, removeForm }) => (
+type ProductFormProps = {
+  control: any;
+  index: number;
+  removeForm: (index: number) => void;
+};
+
+const ProductForm: React.FC<ProductFormProps> = ({
+  control,
+  index,
+  removeForm,
+}) => (
   <div className="relative grid grid-cols-2 gap-x-5 gap-y-4 border p-4 shadow-sm">
     <FormField
       control={control}
@@ -108,19 +119,19 @@ const ProductForm = ({ control, index, removeForm }) => (
 );
 
 const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
-  const form = useForm<StudentFormSchemaType>({
-    resolver: zodResolver(studentFormSchema),
-    defaultValues: {}
+  const form = useForm<OrderFormSchemaType>({
+    resolver: zodResolver(orderFormSchema),
+    defaultValues: {},
   });
 
-  const onSubmit = (values: StudentFormSchemaType) => {
+  const onSubmit = (values: OrderFormSchemaType) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
   };
   const service = [
-    { id: 1, name: 'US' },
-    { id: 2, name: 'EU' }
+    { id: 1, name: "US" },
+    { id: 2, name: "EU" },
   ];
 
   const [forms, setForms] = useState([{ id: 1 }]);
@@ -129,7 +140,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
     setForms([...forms, { id: forms.length + 1 }]);
   };
 
-  const removeForm = (index) => {
+  const removeForm = (index: number) => {
     if (forms.length > 1) {
       setForms(forms.filter((_, i) => i !== index));
     }
@@ -144,7 +155,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
         />
       </div>
 
-      <Heading title={'Add Order'} className="space-y-2 py-4 text-center" />
+      <Heading title={"Add Order"} className="space-y-2 py-4 text-center" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           {/* <FormField

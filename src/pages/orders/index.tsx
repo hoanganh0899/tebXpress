@@ -1,14 +1,14 @@
-import PageHead from '@/components/shared/page-head';
-import { useGetStudents } from './queries/queries';
-import StudentsTable from './components/orders-table';
-import { useSearchParams } from 'react-router-dom';
-import { DataTableSkeleton } from '@/components/shared/data-table-skeleton';
+import PageHead from "@/components/shared/page-head";
+import { useGetStudents } from "./queries/queries";
+import OrdersTable from "./components/orders-table";
+import { useSearchParams } from "react-router-dom";
+import { DataTableSkeleton } from "@/components/shared/data-table-skeleton";
 
 export default function StudentPage() {
   const [searchParams] = useSearchParams();
-  const page = Number(searchParams.get('page') || 1);
-  const pageLimit = Number(searchParams.get('limit') || 10);
-  const country = searchParams.get('search') || null;
+  const page = Number(searchParams.get("page") || 1);
+  const pageLimit = Number(searchParams.get("limit") || 10);
+  const country = searchParams.get("search") || null;
   const offset = (page - 1) * pageLimit;
   const { data, isLoading } = useGetStudents(offset, pageLimit, country);
   const users = data?.users;
@@ -30,7 +30,7 @@ export default function StudentPage() {
   return (
     <div className="p-5">
       <PageHead title="Orders | TebXpress" />
-      <StudentsTable
+      <OrdersTable
         users={users}
         page={page}
         totalUsers={totalUsers}

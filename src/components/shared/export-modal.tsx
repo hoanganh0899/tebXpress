@@ -10,7 +10,7 @@ type TPopupModalProps = {
   renderModal: (onClose: () => void) => React.ReactNode;
 };
 
-export default function PopupModal({ renderModal }: TPopupModalProps) {
+export default function ExportModal({ renderModal }: TPopupModalProps) {
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [isAddNewModalOpen, setIsAddNewModalOpen] = useState(false);
@@ -27,40 +27,40 @@ export default function PopupModal({ renderModal }: TPopupModalProps) {
       >
         <FolderDown className="mr-2 h-4 w-4" /> Import
       </Button> */}
-      {/* <Button
+      <Button
         className="text-xs md:text-sm"
         onClick={() => setIsExportModalOpen(true)}
       >
         <FolderUp className="mr-2 h-4 w-4" /> Export
-      </Button> */}
-      <Button
+      </Button>
+      {/* <Button
         className="text-xs md:text-sm"
         onClick={() => setIsAddNewModalOpen(true)}
       >
         <Plus className="mr-2 h-4 w-4" /> Add New
-      </Button>
+      </Button> */}
 
       {/* <Modal
         isOpen={isImportModalOpen}
         onClose={closeImportModal}
-        className={'!bg-background !px-1'}
+        className={"!bg-background !px-1"}
       >
         <ScrollArea className="h-[80dvh] px-6">
           {renderModal(closeImportModal)}
         </ScrollArea>
       </Modal> */}
 
-      {/* <Modal
+      <Modal
         isOpen={isExportModalOpen}
         onClose={closeExportModal}
-        className={'!bg-background !px-1'}
+        className={"!bg-background !px-1"}
       >
         <ScrollArea className="h-[80dvh] px-6">
           {renderModal(closeExportModal)}
         </ScrollArea>
-      </Modal> */}
+      </Modal>
 
-      <Modal
+      {/* <Modal
         isOpen={isAddNewModalOpen}
         onClose={closeAddNewModal}
         className={"!bg-background !px-1"}
@@ -68,7 +68,7 @@ export default function PopupModal({ renderModal }: TPopupModalProps) {
         <ScrollArea className="h-[80dvh] px-6">
           {renderModal(closeAddNewModal)}
         </ScrollArea>
-      </Modal>
+      </Modal> */}
     </>
   );
 }
