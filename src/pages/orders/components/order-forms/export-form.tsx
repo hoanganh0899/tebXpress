@@ -1,8 +1,7 @@
-// ExportOrdersForm.tsx
-import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import * as XLSX from "xlsx";
 
 // Define Zod schema for form validation
 const exportOrdersSchema = z.object({
@@ -27,6 +26,18 @@ const ExportOrdersForm = ({ modalClose }: { modalClose: () => void }) => {
 
   const onSubmit = (data: ExportOrdersFormData) => {
     console.log("Form data:", data);
+
+    const exampleData = [
+      { order: 1, name: "Order 1", exportOption: data.exportOption },
+      { order: 2, name: "Order 2", exportOption: data.exportOption },
+    ];
+
+    const worksheet = XLSX.utils.json_to_sheet(exampleData);
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Orders");
+
+    XLSX.writeFile(workbook, "ExportedOrders.xlsx");
   };
 
   return (

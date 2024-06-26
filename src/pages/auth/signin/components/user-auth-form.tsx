@@ -1,40 +1,66 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { useRouter } from '@/routes/hooks';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "@/routes/hooks";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import * as z from "zod";
 
+// Validation schema using zod
 const formSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid email address' }),
-  password: z.string()
+  email: z.string().email({ message: "Enter a valid email address" }),
+  password: z.string().min(1, { message: "Password is required" }),
 });
 
 type UserFormValue = z.infer<typeof formSchema>;
 
+const fakeLoginAPI = async (
+  data: UserFormValue
+): Promise<{ success: boolean; message?: string }> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ success: true });
+    }, 1000);
+  });
+};
+
 export default function UserAuthForm() {
   const router = useRouter();
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const defaultValues = {
-    email: 'demo@gmail.com'
+    email: "demo@gmail.com",
   };
+
   const form = useForm<UserFormValue>({
     resolver: zodResolver(formSchema),
-    defaultValues
+    defaultValues,
   });
 
-  const onSubmit = async (data: UserFormValue) => {
-    console.log('data', data);
-    router.push('/');
+  const onSubmit: SubmitHandler<UserFormValue> = async (data) => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fakeLoginAPI(data);
+      if (response.success) {
+        router.push("/");
+      } else {
+        setError(response.message || "Login failed");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,6 +70,7 @@ export default function UserAuthForm() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-2"
         >
+          {error && <div className="text-red-600">{error}</div>}
           <FormField
             control={form.control}
             name="email"
@@ -82,8 +109,19 @@ export default function UserAuthForm() {
           />
 
           <Button disabled={loading} className="ml-auto w-full" type="submit">
-            Continue With Email
+            Đăng nhập tài khoản
           </Button>
+          <p className="font-normal text-sm mb-2">
+            <span className="text-[#626363]">Bạn là thành viên mới? </span>
+            <a href="/signup" className="text-[#D5B263] font-semibold">
+              Tạo tài khoản
+            </a>
+          </p>
+          <p className="font-normal text-sm mb-2">
+            <a href="/forgot-password" className="text-[#D5B263] font-semibold">
+              Quên mật khẩu?
+            </a>
+          </p>
         </form>
       </Form>
       <div className="relative">

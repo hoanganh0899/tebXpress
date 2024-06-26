@@ -41,43 +41,45 @@ const DashboardPage: React.FC = () => {
   return (
     <>
       <PageHead title="Dashboard | TebXpress" />
-      <div className="p-4 pt-6 md:p-8">
-        <div className="flex items-center justify-between space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">
-            Hi, Welcome back 👋
-          </h2>
-          <div className="actions">
-            <select
-              value={time}
-              onChange={(e) => setTime(e.target.value as TimeFrame)}
-              className="rounded-xl border bg-[#f6f7f7] px-3 pb-[7px] pt-[3px] leading-[2.2rem] text-[#626363]"
-            >
-              <option value="d7">7 ngày gần đây</option>
-              <option value="d14">14 ngày gần đây</option>
-              <option value="d30">30 ngày gần đây</option>
-            </select>
-            {startDate && (
-              <p>
-                {startDate.toLocaleDateString()} -{" "}
-                {endDate.toLocaleDateString()}
-              </p>
-            )}
-          </div>
-        </div>
-        <Tabs defaultValue="overview" className="max-w-6xl space-y-4">
-          <TabsContent value="overview" className="space-y-4">
-            <div className="">
-              <Card className="">
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
-                </CardHeader>
-                <CardContent className="pl-2">
-                  <OrderStatsChart startDate={startDate} endDate={endDate} />
-                </CardContent>
-              </Card>
+      <div>
+        <div className="p-4 pt-6 md:p-8 max-w-6xl mx-auto">
+          <div className="flex items-center justify-between space-y-2">
+            <h2 className="text-3xl font-bold tracking-tight">
+              Hi, Welcome back 👋
+            </h2>
+            <div className="actions">
+              <select
+                value={time}
+                onChange={(e) => setTime(e.target.value as TimeFrame)}
+                className="rounded-xl border bg-[#f6f7f7] px-3 pb-[7px] pt-[3px] leading-[2.2rem] text-[#626363]"
+              >
+                <option value="d7">7 ngày gần đây</option>
+                <option value="d14">14 ngày gần đây</option>
+                <option value="d30">30 ngày gần đây</option>
+              </select>
+              {startDate && (
+                <p>
+                  {startDate.toLocaleDateString()} -{" "}
+                  {endDate.toLocaleDateString()}
+                </p>
+              )}
             </div>
-          </TabsContent>
-        </Tabs>
+          </div>
+          <Tabs defaultValue="overview" className=" space-y-4 mt-10">
+            <TabsContent value="overview" className="space-y-4">
+              <div className="">
+                <Card className="">
+                  <CardHeader>
+                    <CardTitle>Thống kê đơn hàng</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pl-2">
+                    <OrderStatsChart startDate={startDate} endDate={endDate} />
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </>
   );

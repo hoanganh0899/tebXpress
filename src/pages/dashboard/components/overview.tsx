@@ -80,10 +80,6 @@ const OrderStatsChart: React.FC<OrderStatsChartProps> = ({
       legend: {
         position: "top" as const,
       },
-      title: {
-        display: true,
-        text: "Thống kê đơn hàng",
-      },
     },
   };
 

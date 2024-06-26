@@ -14,10 +14,10 @@ export const navItems: NavItem[] = [
     label: "Orders",
   },
   {
-    title: "Login",
-    href: "/login",
-    icon: "login",
-    label: "Login",
+    title: "Bill",
+    href: "/bill",
+    icon: "billing",
+    label: "Bill",
   },
 ];
 
