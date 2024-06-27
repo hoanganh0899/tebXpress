@@ -19,6 +19,11 @@ import {
   Landmark,
 } from "lucide-react";
 import WalletBalance from "./components/wallet-balance";
+import TopUp from "./components/top-up";
+import ManagementTab from "./components/management";
+import HistoryTab from "./components/history";
+import PendingTab from "./components/pending";
+import Withdraw from "./components/withdraw";
 
 const Bill: React.FC = () => {
   const balance = 0.0;
@@ -31,11 +36,11 @@ const Bill: React.FC = () => {
         points={points}
         pendingAmount={pendingAmount}
       />
-      <Tabs defaultValue="account" className="max-w-6xl m-10">
+      <Tabs defaultValue="topUp" className="max-w-6xl m-10">
         <TabsList className="grid grid-cols-6">
-          <TabsTrigger value="account">
+          <TabsTrigger value="topUp">
             <Landmark />
-            Nạp tiền
+            Top up
           </TabsTrigger>
           <TabsTrigger value="management">
             <FileCog />
@@ -53,68 +58,25 @@ const Bill: React.FC = () => {
             <CandlestickChart />
             Exchange
           </TabsTrigger>
-          <TabsTrigger value="password">
+          <TabsTrigger value="withdraw">
             <CircleDollarSign />
             Rút tiền
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
-          <Card>
-            <CardHeader>
-              {/* <CardTitle>Account</CardTitle> */}
-              <CardDescription>
-                Vui lòng chuyển tiền theo thông tin dưới đây:
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <p>Ngân hàng:</p>
-                <b>MSB</b>
-              </div>
-              <div className="space-y-1">
-                <p>Tên chủ thẻ:</p>
-                <b>NGUYEN HOANG ANH</b>
-              </div>
-              <div className="space-y-1">
-                <p>Số tài khoản:</p>
-                <b>103 867 393 447</b>
-              </div>
-              <div className="space-y-1">
-                <p>Nội dung chuyển khoản:</p>
-                <b>Nap topup</b>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Submit</Button>
-            </CardFooter>
-          </Card>
+        <TabsContent value="topUp">
+          <TopUp />
         </TabsContent>
-        <TabsContent value="password">
-          <Card>
-            <CardHeader>
-              {/* <CardTitle>Password</CardTitle>
-            <CardDescription>
-              Change your password here. After saving, you'll be logged out.
-            </CardDescription> */}
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Bank name</Label>
-                <Input id="current" type="text" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">Bank number</Label>
-                <Input id="new" type="text" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="money">Amount</Label>
-                <Input id="" type="number" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Submit</Button>
-            </CardFooter>
-          </Card>
+        <TabsContent value="management">
+          <ManagementTab />
+        </TabsContent>
+        <TabsContent value="history">
+          <HistoryTab />
+        </TabsContent>
+        <TabsContent value="pending">
+          <PendingTab />
+        </TabsContent>
+        <TabsContent value="withdraw">
+          <Withdraw />
         </TabsContent>
       </Tabs>
     </div>

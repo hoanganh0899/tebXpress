@@ -19,6 +19,24 @@ export const navItems: NavItem[] = [
     icon: "billing",
     label: "Bill",
   },
+  {
+    title: "Tracking",
+    href: "/tracking",
+    icon: "truck",
+    label: "Tracking",
+  },
+  {
+    title: "Setting",
+    icon: "setting",
+    label: "Setting",
+    children: [
+      {
+        title: "Products",
+        href: "/setting/product",
+        label: "Products",
+      },
+    ],
+  },
 ];
 
 export const users = [

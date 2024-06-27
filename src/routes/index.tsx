@@ -1,5 +1,7 @@
 import Bill from "@/pages/bill";
 import NotFound from "@/pages/not-found";
+import ListProduct from "@/pages/setting/components/ListProduct";
+import Tracking from "@/pages/tracking";
 import { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 
@@ -46,6 +48,14 @@ export default function AppRouter() {
         {
           path: "bill",
           element: <Bill />,
+        },
+        {
+          path: "tracking",
+          element: <Tracking ListPackages={[]} codes={[]} />,
+        },
+        {
+          path: "setting/product",
+          element: <ListProduct />,
         },
       ],
     },
