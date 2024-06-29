@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Plus } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,11 +29,12 @@ const ListProduct: React.FC = () => {
 
   return (
     <div className="page-header flex justify-between px-6 pt-0 pb-[18px] mt-5">
-      <div className="w-full">
+      <div className="w-full relative">
+        <Search className="absolute top-[0.5rem] mx-2 pl-2" />
         <input
           type="search"
           placeholder="Search by product name or SKU"
-          className="mb-2 border border-gray-300 p-2 rounded w-full"
+          className="mb-2 border border-gray-300 p-2 rounded w-full ml-2 px-6"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           onKeyUp={(e) => e.key === "Enter" && handleSearch()}

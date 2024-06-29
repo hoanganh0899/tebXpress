@@ -1,23 +1,28 @@
 import React, { useState } from "react";
-import { ModalTracking } from "./ModalTracking"; // Import your ModalTracking component
 import { Button } from "@/components/ui/button";
 import { FileSearch } from "lucide-react";
+import ModalTracking from "./components/ModalTracking";
 
 interface SearchSectionProps {
   ListPackages: any[];
   codes: string[];
 }
 
-const Tracking: React.FC<SearchSectionProps> = ({ ListPackages, codes }) => {
-  const [code, setCode] = useState<string>("");
-  const [openTextarea, setOpenTextarea] = useState<boolean>(false);
+const Tracking: React.FC<SearchSectionProps> = () => {
+  const [code, setCode] = useState("");
+  const [openTextarea, setOpenTextarea] = useState(false);
 
   const openInput = () => {
     setOpenTextarea(!openTextarea);
   };
 
-  const track = (newCode: string) => {
-    setCode(newCode);
+  const closeTextarea = () => {
+    setOpenTextarea(false);
+  };
+
+  const track = () => {
+    // Handle the tracking logic here
+    console.log("Tracking:", code);
   };
 
   return (
@@ -38,12 +43,13 @@ const Tracking: React.FC<SearchSectionProps> = ({ ListPackages, codes }) => {
             onChange={(e) => setCode(e.target.value)}
             placeholder="Please enter the tracking number, separated by enter"
           />
-          {/* <ModalTracking
-            className={`input-multi ${openTextarea ? "input-multi-open" : ""}`}
-            id="textarea"
+          <ModalTracking
             text={code}
-            onTrack={track}
-          /> */}
+            setText={setCode}
+            track={track}
+            open={openTextarea}
+            closeTextarea={closeTextarea}
+          />
         </div>
         <div className="button-group w-[127px] flex flex-col absolute right-0">
           <Button className="btn btn-tracking color-[#fff] bg-[#141f65] h-14">

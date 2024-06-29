@@ -1,6 +1,11 @@
 import Bill from "@/pages/bill";
+import ListClaim from "@/pages/claim";
 import NotFound from "@/pages/not-found";
+import CustomizeLabel from "@/pages/setting/components/CustomizeLabel";
+import ListCoupon from "@/pages/setting/components/ListCoupon";
 import ListProduct from "@/pages/setting/components/ListProduct";
+import ListTemplate from "@/pages/setting/components/ListTemplate";
+import PriceTable from "@/pages/setting/components/Prices";
 import Tracking from "@/pages/tracking";
 import { Suspense, lazy } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
@@ -56,6 +61,26 @@ export default function AppRouter() {
         {
           path: "setting/product",
           element: <ListProduct />,
+        },
+        {
+          path: "setting/template",
+          element: <ListTemplate />,
+        },
+        {
+          path: "setting/label",
+          element: <CustomizeLabel />,
+        },
+        {
+          path: "setting/prices",
+          element: <PriceTable />,
+        },
+        {
+          path: "setting/coupon",
+          element: <ListCoupon />,
+        },
+        {
+          path: "claim",
+          element: <ListClaim />,
         },
       ],
     },

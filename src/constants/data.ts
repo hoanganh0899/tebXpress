@@ -22,7 +22,7 @@ export const navItems: NavItem[] = [
   {
     title: "Tracking",
     href: "/tracking",
-    icon: "truck",
+    icon: "map",
     label: "Tracking",
   },
   {

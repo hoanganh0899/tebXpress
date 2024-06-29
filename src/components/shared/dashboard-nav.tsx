@@ -1,8 +1,8 @@
-import { cn } from '@/lib/utils';
-import { NavItem } from '@/types';
-import { Dispatch, SetStateAction } from 'react';
-import { NavLink } from 'react-router-dom';
-import { Icons } from '../ui/icons';
+import { cn } from "@/lib/utils";
+import { NavItem } from "@/types";
+import { Dispatch, SetStateAction } from "react";
+import { NavLink } from "react-router-dom";
+import { Icons } from "../ui/icons";
 
 type DashboardNavProps = {
   items: NavItem[];
@@ -15,7 +15,7 @@ type DashboardNavItemProps = {
 };
 
 const DashboardNavItem = ({ item, setOpen }: DashboardNavItemProps) => {
-  const Icon = Icons[item.icon || 'arrowRight'];
+  const Icon = Icons[item.icon || "arrowRight"];
 
   return (
     <div
@@ -30,8 +30,8 @@ const DashboardNavItem = ({ item, setOpen }: DashboardNavItemProps) => {
       <NavLink
         className={({ isActive }) =>
           cn(
-            'flex transform items-center rounded-full px-3 py-2 text-[#D5B263] transition-colors duration-300 hover:bg-gray-50 hover:text-[#D5B263] hover:dark:text-[#D5B263] ',
-            isActive && 'bg-gray-50 text-[#D5B263] dark:text-[#D5B263]'
+            "flex transform items-center rounded-full px-3 py-2 text-[#D5B263] transition-colors duration-300 hover:bg-gray-50 hover:text-[#D5B263] hover:dark:text-[#D5B263] ",
+            isActive && "bg-gray-50 text-[#D5B263] dark:text-[#D5B263]"
           )
         }
         to={item.href}
