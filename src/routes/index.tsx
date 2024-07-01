@@ -1,6 +1,7 @@
 import Bill from "@/pages/bill";
 import ListClaim from "@/pages/claim";
 import NotFound from "@/pages/not-found";
+import PackageDetail from "@/pages/packages/PackageDetail";
 import CustomizeLabel from "@/pages/setting/components/CustomizeLabel";
 import ListCoupon from "@/pages/setting/components/ListCoupon";
 import ListProduct from "@/pages/setting/components/ListProduct";
@@ -17,8 +18,10 @@ const SignInPage = lazy(() => import("@/pages/auth/signin"));
 const SignUp = lazy(() => import("@/pages/auth/signup"));
 const Account = lazy(() => import("@/pages/account"));
 const DashboardPage = lazy(() => import("@/pages/dashboard"));
-const OrderPage = lazy(() => import("@/pages/orders"));
-const OrderDetailPage = lazy(() => import("@/pages/orders/OrderDetailPage"));
+const OrderPage = lazy(() => import("@/pages/packages"));
+const PackageDetailPage = lazy(
+  () => import("@/pages/packages/PackageDetailPage")
+);
 
 // ----------------------------------------------------------------------
 
@@ -39,12 +42,16 @@ export default function AppRouter() {
           index: true,
         },
         {
-          path: "order",
+          path: "packages",
           element: <OrderPage />,
         },
         {
           path: "student/details",
-          element: <OrderDetailPage />,
+          element: <PackageDetailPage />,
+        },
+        {
+          path: "package/details",
+          element: <PackageDetail />,
         },
         {
           path: "/account",

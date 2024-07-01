@@ -8,10 +8,10 @@ export const navItems: NavItem[] = [
     label: "Dashboard",
   },
   {
-    title: "Orders",
-    href: "/order",
+    title: "Packages",
+    href: "/packages",
     icon: "shopping",
-    label: "Orders",
+    label: "Packages",
   },
   {
     title: "Bill",

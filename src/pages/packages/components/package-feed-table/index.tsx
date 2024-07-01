@@ -1,6 +1,6 @@
 import DataTable from "@/components/shared/data-table";
 import { columns } from "./columns";
-import StudentTableActions from "./order-table-action";
+import StudentTableActions from "./package-table-action";
 
 type TStudentsTableProps = {
   users: any;
@@ -9,7 +9,10 @@ type TStudentsTableProps = {
   pageCount: number;
 };
 
-export default function OrdersTable({ users, pageCount }: TStudentsTableProps) {
+export default function StudentFeedTable({
+  users,
+  pageCount,
+}: TStudentsTableProps) {
   return (
     <>
       <StudentTableActions />

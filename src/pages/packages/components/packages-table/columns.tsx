@@ -25,7 +25,7 @@ export const columns: ColumnDef<Employee>[] = [
   },
   {
     accessorKey: "first_name",
-    header: "NAME",
+    header: "ORDER NO.",
   },
   {
     accessorKey: "country",

@@ -1,6 +1,6 @@
 import PageHead from "@/components/shared/page-head";
 import { useGetStudents } from "./queries/queries";
-import OrdersTable from "./components/orders-table";
+import OrdersTable from "./components/packages-table";
 import { useSearchParams } from "react-router-dom";
 import { DataTableSkeleton } from "@/components/shared/data-table-skeleton";
 

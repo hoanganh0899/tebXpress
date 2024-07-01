@@ -3,6 +3,8 @@ import PageHead from "@/components/shared/page-head";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import OrderStatsChart from "./components/overview";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 type TimeFrame = "d7" | "d14" | "d30";
 
@@ -65,12 +67,19 @@ const DashboardPage: React.FC = () => {
               )}
             </div>
           </div>
+          <div className="relative">
+            <Input
+              className="rounded-3xl h-[3rem] pl-[1.5rem] mt-4"
+              placeholder="Search by tracking code"
+            />
+            <Search className="absolute right-[15px] top-[12px]" />
+          </div>
           <Tabs defaultValue="overview" className=" space-y-4 mt-10">
             <TabsContent value="overview" className="space-y-4">
               <div className="">
                 <Card className="">
                   <CardHeader>
-                    <CardTitle>Thống kê đơn hàng</CardTitle>
+                    <CardTitle className="text-xl">Thống kê đơn hàng</CardTitle>
                   </CardHeader>
                   <CardContent className="pl-2">
                     <OrderStatsChart startDate={startDate} endDate={endDate} />

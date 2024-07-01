@@ -1,10 +1,8 @@
 import PopupModal from "@/components/shared/popup-modal";
 import TableSearchInput from "@/components/shared/table-search-input";
-import OrderCreateForm from "../order-forms/order-create-form";
-import ImportOrdersForm from "../order-forms/import-form";
-import ImportModal from "@/components/shared/import-modal";
-import ExportOrdersForm from "../order-forms/export-form";
-import ExportModal from "@/components/shared/export-modal";
+import { Button } from "@/components/ui/button";
+import OrderCreateForm from "../package-forms/package-create-form";
+import { DownloadIcon } from "lucide-react";
 
 export default function StudentTableActions() {
   return (
@@ -13,12 +11,11 @@ export default function StudentTableActions() {
         <TableSearchInput placeholder="Search People Here" />
       </div>
       <div className="flex gap-3">
-        <ExportModal
-          renderModal={(onClose) => <ExportOrdersForm modalClose={onClose} />}
-        />
-        <ImportModal
-          renderModal={(onClose) => <ImportOrdersForm modalClose={onClose} />}
-        />
+        <Button>
+          <DownloadIcon className="h-6 w-6" />
+          Download CSV
+        </Button>
+
         <PopupModal
           renderModal={(onClose) => <OrderCreateForm modalClose={onClose} />}
         />
