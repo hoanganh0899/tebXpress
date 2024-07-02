@@ -1,7 +1,7 @@
 import DataTable from "@/components/shared/data-table";
 import { columns } from "./columns";
 import StudentTableActions from "./package-table-action";
-import OrderTabs from "./package-status-tab";
+import PackageTabs from "./package-status-tab";
 
 type TStudentsTableProps = {
   users: any;
@@ -14,7 +14,7 @@ export default function OrdersTable({ users, pageCount }: TStudentsTableProps) {
   return (
     <>
       <StudentTableActions />
-      <OrderTabs />
+      <PackageTabs />
       {users && (
         <DataTable columns={columns} data={users} pageCount={pageCount} />
       )}

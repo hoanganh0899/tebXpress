@@ -28,7 +28,7 @@ const Tab: React.FC<TabProps> = ({
   );
 };
 
-const OrderTabs: React.FC = () => {
+const PackageTabs: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const tabs = [
     "All",
@@ -72,4 +72,4 @@ const OrderTabs: React.FC = () => {
   );
 };
 
-export default OrderTabs;
+export default PackageTabs;

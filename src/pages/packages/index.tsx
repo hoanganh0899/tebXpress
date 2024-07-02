@@ -11,7 +11,8 @@ export default function StudentPage() {
   const country = searchParams.get("search") || null;
   const offset = (page - 1) * pageLimit;
   const { data, isLoading } = useGetStudents(offset, pageLimit, country);
-  const users = data?.users;
+  const users = data?.packages;
+  console.log("data:", users);
   const totalUsers = data?.total_users; //1000
   const pageCount = Math.ceil(totalUsers / pageLimit);
 

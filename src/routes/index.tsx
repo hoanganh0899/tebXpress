@@ -1,7 +1,10 @@
 import Bill from "@/pages/bill";
+import BillDetail from "@/pages/bill/bill-detail";
 import ListClaim from "@/pages/claim";
 import NotFound from "@/pages/not-found";
+import Order from "@/pages/order";
 import PackageDetail from "@/pages/packages/PackageDetail";
+import PackageReturn from "@/pages/packages/packages-return";
 import CustomizeLabel from "@/pages/setting/components/CustomizeLabel";
 import ListCoupon from "@/pages/setting/components/ListCoupon";
 import ListProduct from "@/pages/setting/components/ListProduct";
@@ -54,8 +57,16 @@ export default function AppRouter() {
           element: <PackageDetail />,
         },
         {
+          path: "package/return",
+          element: <PackageReturn />,
+        },
+        {
           path: "/account",
           element: <Account />,
+        },
+        {
+          path: "bill/detail",
+          element: <BillDetail />,
         },
         {
           path: "bill",
@@ -88,6 +99,10 @@ export default function AppRouter() {
         {
           path: "claim",
           element: <ListClaim />,
+        },
+        {
+          path: "order",
+          element: <Order />,
         },
       ],
     },

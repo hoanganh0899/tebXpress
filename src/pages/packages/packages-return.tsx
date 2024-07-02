@@ -1,6 +1,4 @@
-// src/components/tabs/PendingTab.tsx
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Popover,
   PopoverContent,
@@ -63,26 +61,21 @@ function DatePickerWithRange({
   );
 }
 
-const PendingTab: React.FC = () => {
+export default function PackageReturn() {
   return (
-    <Card>
-      <CardContent className="space-y-2">
-        <div className="flex gap-3 mt-5">
-          <div className="mb-4 w-full col-span-2">
-            <input
-              type="text"
-              className="border p-2 w-full rounded-md"
-              placeholder="Tìm theo mã tracking hoặc mã hóa đơn"
-            />
-          </div>
-          <div className="items-center mb-4">
-            <DatePickerWithRange />
-          </div>
+    <div className="bg-[#f6f7f7] pt-2 border-b">
+      <div className="flex gap-3 mt-5 mx-8">
+        <div className="mb-4 w-[382px] col-span-2">
+          <input
+            type="text"
+            className="border p-2 w-full rounded-md"
+            placeholder="Search by tracking code or order code"
+          />
         </div>
-        <div className="text-center"></div>
-      </CardContent>
-    </Card>
+        <div className="items-center mb-4">
+          <DatePickerWithRange />
+        </div>
+      </div>
+    </div>
   );
-};
-
-export default PendingTab;
+}
