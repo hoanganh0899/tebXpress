@@ -26,14 +26,14 @@ const WalletBalance: React.FC<WalletBalanceProps> = ({
       <div className="flex flex-col items-center p-4 bg-[#fff7e6] rounded-xl">
         <img src="http://localhost:6969/img/debit.069df087.svg" />
         <span className="text-gray-700">Tiền chưa thanh toán</span>
-        <span className="text-xl font-semibold">
-          ${pendingAmount.toFixed(2)}
-        </span>
+        <span className="text-xl font-semibold">$0.00</span>
       </div>
       <div className="flex flex-col items-center p-4 bg-purple-100 rounded-xl">
         <img src="http://localhost:6969/img/time.bcb545bb.svg" />
         <span className="text-gray-700">Tiền chờ xử lý</span>
-        <span className="text-xl font-semibold">$0.00</span>
+        <span className="text-xl font-semibold">
+          ${pendingAmount.toFixed(2)}
+        </span>
       </div>
     </div>
   );

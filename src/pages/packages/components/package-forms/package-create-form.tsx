@@ -181,7 +181,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                   name="firstname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Dịch vụ</FormLabel>
+                      <FormLabel>Service</FormLabel>
                       <FormControl>
                         <Select
                           value={field.value?.toString()}
@@ -505,41 +505,6 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
               ))}
             </div>
           </div>
-
-          {/* <div className="grid grid-cols-1 gap-x-8 gap-y-4">
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter your password"
-                      {...field}
-                      className=" px-4 py-6 shadow-inner drop-shadow-xl"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter your confirmPassword"
-                      {...field}
-                      className=" px-4 py-6 shadow-inner drop-shadow-xl"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div> */}
           <div className="flex justify-between">
             <div className="">
               <div className="total">

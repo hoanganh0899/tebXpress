@@ -24,13 +24,40 @@ import ManagementTab from "./components/management";
 import HistoryTab from "./components/history";
 import PendingTab from "./components/pending";
 import Withdraw from "./components/withdraw";
+import { useEffect, useState } from "react";
+import { getHoldings, getTransactions } from "@/services/bill";
 
 const Bill: React.FC = () => {
-  const balance = 0.0;
+  const [balance, setBalance] = useState(0.0);
   const points = 0;
-  const pendingAmount = 0.0;
+  const [pendingAmount, setPendingAmount] = useState(0.0);
+
+  const handleGetTransaction = async () => {
+    try {
+      const result = await getTransactions();
+      console.log("Transactions fetched:", result);
+      setBalance(result.balance);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
+
+  const handleGetHolding = async () => {
+    try {
+      const result = await getHoldings();
+      console.log("Holdings fetched:", result);
+      setPendingAmount(result.user.holding_money);
+    } catch (error) {
+      console.error("Error fetching holdings:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetTransaction();
+    handleGetHolding();
+  }, []);
   return (
-    <div className="mx-auto my-10">
+    <div className="2xl:ml-40 my-10">
       <WalletBalance
         balance={balance}
         points={points}

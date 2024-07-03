@@ -1,13 +1,13 @@
-import { getStudents } from "@/lib/api";
+import { getListPackages } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetStudents = (
+export const useGetListPackages = (
   offset: number,
   pageLimit: number,
-  country: string | null
+  code: string | null
 ) => {
   return useQuery({
-    queryKey: ["students", offset, pageLimit, country],
-    queryFn: async () => getStudents(offset, pageLimit, country),
+    queryKey: ["students", offset, pageLimit, code],
+    queryFn: async () => getListPackages(offset, pageLimit, code),
   });
 };

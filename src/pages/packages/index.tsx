@@ -1,5 +1,5 @@
 import PageHead from "@/components/shared/page-head";
-import { useGetStudents } from "./queries/queries";
+import { useGetListPackages } from "./queries/queries";
 import OrdersTable from "./components/packages-table";
 import { useSearchParams } from "react-router-dom";
 import { DataTableSkeleton } from "@/components/shared/data-table-skeleton";
@@ -8,11 +8,11 @@ export default function StudentPage() {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get("page") || 1);
   const pageLimit = Number(searchParams.get("limit") || 10);
-  const country = searchParams.get("search") || null;
+  const code = searchParams.get("search") || null;
   const offset = (page - 1) * pageLimit;
-  const { data, isLoading } = useGetStudents(offset, pageLimit, country);
-  const users = data?.packages;
-  console.log("data:", users);
+  const { data, isLoading } = useGetListPackages(offset, pageLimit, code);
+  const packages = data?.packages;
+  console.log("data:", packages);
   const totalUsers = data?.total_users; //1000
   const pageCount = Math.ceil(totalUsers / pageLimit);
 
@@ -32,7 +32,7 @@ export default function StudentPage() {
     <div className="p-5">
       <PageHead title="Orders | TebXpress" />
       <OrdersTable
-        users={users}
+        packages={packages}
         page={page}
         totalUsers={totalUsers}
         pageCount={pageCount}

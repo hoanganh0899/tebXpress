@@ -1,3 +1,4 @@
+import { LoginPage } from "@/pages/auth/signin";
 import Bill from "@/pages/bill";
 import BillDetail from "@/pages/bill/bill-detail";
 import ListClaim from "@/pages/claim";
@@ -111,7 +112,7 @@ export default function AppRouter() {
   const publicRoutes = [
     {
       path: "/login",
-      element: <SignInPage />,
+      element: <LoginPage />,
       index: true,
     },
     {

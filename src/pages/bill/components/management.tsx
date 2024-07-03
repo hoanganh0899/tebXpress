@@ -11,6 +11,7 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+import { DataTableDemo } from "./data-table/management-table";
 
 function DatePickerWithRange({
   className,
@@ -80,7 +81,9 @@ const ManagementTab: React.FC = () => {
             </button>
           </div>
         </div>
-        <div className="text-center"></div>
+        <div className="">
+          <DataTableDemo />
+        </div>
       </CardContent>
     </Card>
   );

@@ -4,19 +4,22 @@ import StudentTableActions from "./package-table-action";
 import PackageTabs from "./package-status-tab";
 
 type TStudentsTableProps = {
-  users: any;
+  packages: any;
   page: number;
   totalUsers: number;
   pageCount: number;
 };
 
-export default function OrdersTable({ users, pageCount }: TStudentsTableProps) {
+export default function OrdersTable({
+  packages,
+  pageCount,
+}: TStudentsTableProps) {
   return (
     <>
       <StudentTableActions />
       <PackageTabs />
-      {users && (
-        <DataTable columns={columns} data={users} pageCount={pageCount} />
+      {packages && (
+        <DataTable columns={columns} data={packages} pageCount={pageCount} />
       )}
     </>
   );

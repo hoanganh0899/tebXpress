@@ -109,17 +109,17 @@ export default function UserAuthForm() {
           />
 
           <Button disabled={loading} className="ml-auto w-full" type="submit">
-            Đăng nhập tài khoản
+            Sign in
           </Button>
           <p className="font-normal text-sm mb-2">
-            <span className="text-[#626363]">Bạn là thành viên mới? </span>
+            <span className="text-[#626363]">Are you new member? </span>
             <a href="/signup" className="text-[#D5B263] font-semibold">
-              Tạo tài khoản
+              Sign up
             </a>
           </p>
           <p className="font-normal text-sm mb-2">
             <a href="/forgot-password" className="text-[#D5B263] font-semibold">
-              Quên mật khẩu?
+              Forgot password?
             </a>
           </p>
         </form>
