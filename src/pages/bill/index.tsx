@@ -63,7 +63,7 @@ const Bill: React.FC = () => {
         points={points}
         pendingAmount={pendingAmount}
       />
-      <Tabs defaultValue="topUp" className="max-w-6xl m-10">
+      <Tabs defaultValue="management" className="max-w-6xl m-10">
         <TabsList className="grid grid-cols-6">
           <TabsTrigger value="topUp">
             <Landmark />

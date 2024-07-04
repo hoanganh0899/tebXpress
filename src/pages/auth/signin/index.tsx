@@ -30,15 +30,19 @@ const LoginPage = () => {
         password,
         verifyReCaptcha
       );
-      // console.log("login:", loginResponse);
+      console.log("login:", loginResponse.access_token);
+      // console.log("recaptcha:", verifyReCaptcha);
+
       setIsLogin(false);
       if (!loginResponse.success || !loginResponse.data) {
         toast.error(loginResponse.message);
         return;
       }
       const { accessToken, user } = loginResponse.data;
-      console.log("login:", accessToken, user);
-      useAuthStore.getState().login(accessToken, user);
+      // console.log("data:", loginResponse.data);
+      useAuthStore
+        .getState()
+        .login(loginResponse.access_token, loginResponse.user);
       router.push("/");
       // redirect();
     } catch (err) {

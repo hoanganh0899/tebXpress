@@ -1,5 +1,5 @@
 // src/components/tabs/HistoryTab.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Popover,
@@ -12,7 +12,43 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+import { getTransactions } from "@/services/bill";
+import {
+  TransactionLogAffiliate,
+  TransactionLogTypePay,
+  TransactionLogTypePayoneer,
+  TransactionLogTypePingPong,
+  TransactionLogTypeRefund,
+  TransactionLogTypeTopup,
+} from "@/constants/bill";
 
+interface Bill {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  code: string;
+  shipping_fee: number;
+  extra_fee: number;
+  status: number;
+  user_id: number;
+  package: any; // Thay any bằng kiểu phù hợp nếu có thông tin chi tiết về package
+}
+
+interface BillTransaction {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  user_id: number;
+  admin_id: number;
+  bill_id: number;
+  bill: Bill;
+  amount: number;
+  description: string;
+  type: number;
+  status: number;
+  user: any; // Thay any bằng kiểu phù hợp nếu có thông tin chi tiết về user
+  admin: any; // Thay any bằng kiểu phù hợp nếu có thông tin chi tiết về admin
+}
 function DatePickerWithRange({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
@@ -64,6 +100,34 @@ function DatePickerWithRange({
 }
 
 const HistoryTab: React.FC = () => {
+  const [transactions, setTransactions] = useState<BillTransaction[] | null>(
+    []
+  );
+
+  const typeTopup = TransactionLogTypeTopup;
+  const typePingPong = TransactionLogTypePingPong;
+  const typePayoneer = TransactionLogTypePayoneer;
+  const typePay = TransactionLogTypePay;
+  const typeRefund = TransactionLogTypeRefund;
+  const typeAffiliate = TransactionLogAffiliate;
+
+  console.log("topup:", typeTopup);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const payments = await getTransactions();
+        setTransactions(payments.transactions);
+      } catch (error) {
+        console.error("Error fetching payments:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log("transaction:", transactions);
+
   return (
     <Card>
       <CardContent className="space-y-2">
@@ -80,7 +144,59 @@ const HistoryTab: React.FC = () => {
             <DatePickerWithRange />
           </div>
         </div>
-        <div className="text-center"></div>
+        {transactions!.length > 0 ? (
+          transactions?.map((item, i) => (
+            <div className="flex justify-between transaction-info" key={i}>
+              <div>
+                {/* {item.type === typeRefund || item.type === typeAffiliate ? (
+                  <img src={require("@assets/img/rotate-left.svg")} alt="" />
+                ) : (
+                  <img
+                    src={
+                      item.type === typeTopup ||
+                      item.type === typePayoneer ||
+                      item.type === typePingPong
+                        ? require("@assets/img/in.svg")
+                        : require("@assets/img/out.svg")
+                    }
+                    alt=""
+                  />
+                )} */}
+                <div>
+                  <div>
+                    {item.type === typeTopup ||
+                    item.type === typePayoneer ||
+                    item.type === typePingPong
+                      ? "Nạp tiền vào ví"
+                      : item.type === typeRefund || item.type === typeAffiliate
+                        ? "Hoàn tiền cho hóa đơn"
+                        : "Thanh toán hóa đơn"}
+                  </div>
+                  <span>
+                    {/* {formatWeekday(item.created_at)},{" "} */}
+                    {new Date(item.created_at).toLocaleDateString(
+                      "vi-VN"
+                    )} -{" "}
+                    {new Date(item.created_at).toLocaleTimeString("vi-VN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <div>
+                  {item.type === typePayoneer || item.type === typePingPong
+                    ? `+ ${Math.abs(item.amount).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}`
+                    : `${item.type === typePay ? "-" : "+"} ${Math.abs(item.amount).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}`}
+                </div>
+                <span>{item.status}</span>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No transactions available</p>
+        )}
       </CardContent>
     </Card>
   );

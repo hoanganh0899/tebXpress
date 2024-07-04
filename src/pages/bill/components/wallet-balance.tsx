@@ -21,7 +21,9 @@ const WalletBalance: React.FC<WalletBalanceProps> = ({
         <span className="text-lg text-gray-500">
           Điểm tích lũy: {points} điểm
         </span>
-        <span className="text-xs text-green-600">Sử dụng ➔</span>
+        <a href="setting/coupon">
+          <span className="text-xs text-green-600">Sử dụng ➔</span>
+        </a>
       </div>
       <div className="flex flex-col items-center p-4 bg-[#fff7e6] rounded-xl">
         <img src="http://localhost:6969/img/debit.069df087.svg" />

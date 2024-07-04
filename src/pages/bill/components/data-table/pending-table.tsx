@@ -11,21 +11,19 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  ChevronDown,
-  Download,
-  MoreHorizontal,
-} from "lucide-react";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -37,6 +35,7 @@ import {
 } from "@/components/ui/table";
 import { getBillList } from "@/services/bill";
 import { Link } from "react-router-dom";
+import { getPackagesHolding } from "@/services/packages";
 
 export type Payment = {
   id: string;
@@ -69,17 +68,17 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "code",
-    header: "Bill code",
+    accessorKey: "package_id",
+    header: "Tracking code",
     cell: ({ row }) => (
       <div className="capitalize text-[#006a5e] font-medium">
         <Link
           to={{
-            pathname: `/bill/detail/${row.getValue("code")}`,
+            pathname: `/package/details/${row.getValue("package_id")}`,
           }}
           className="text-no-underline"
         >
-          {row.getValue("code")}
+          LB027421200{row.getValue("package_id")}
         </Link>
       </div>
     ),
@@ -103,10 +102,20 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "shipping_fee",
+    accessorKey: "date_process",
+    header: () => <div className="text-center">Date process</div>,
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("created_at"));
+      return (
+        <div className="lowercase text-center">{date.toLocaleDateString()}</div>
+      );
+    },
+  },
+  {
+    accessorKey: "amount",
     header: () => <div className="text-right">Total fee</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("shipping_fee"));
+      const amount = parseFloat(row.getValue("amount"));
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
@@ -117,29 +126,9 @@ export const columns: ColumnDef<Payment>[] = [
       return <div className="text-right font-medium">{formatted}</div>;
     },
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original;
-
-      return (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Download className="float-right hover:text-[#28a745]" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Export bill</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      );
-    },
-  },
 ];
 
-export function DataTableDemo() {
+export function PendingTable() {
   const [data, setData] = React.useState<Payment[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -154,8 +143,8 @@ export function DataTableDemo() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const payments = await getBillList();
-        setData(payments.bills);
+        const payments = await getPackagesHolding();
+        setData(payments.package_holding);
       } catch (error) {
         console.error("Error fetching payments:", error);
       } finally {

@@ -12,6 +12,7 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 import { addDays, format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+import { PendingTable } from "./data-table/pending-table";
 
 function DatePickerWithRange({
   className,
@@ -79,7 +80,9 @@ const PendingTab: React.FC = () => {
             <DatePickerWithRange />
           </div>
         </div>
-        <div className="text-center"></div>
+        <div className="">
+          <PendingTable />
+        </div>
       </CardContent>
     </Card>
   );

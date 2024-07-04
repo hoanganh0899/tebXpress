@@ -18,7 +18,7 @@ import { Navigate, Outlet, useRoutes } from "react-router-dom";
 const DashboardLayout = lazy(
   () => import("@/components/layout/dashboard-layout")
 );
-const SignInPage = lazy(() => import("@/pages/auth/signin"));
+// const SignInPage = lazy(() => import("@/pages/auth/signin"));
 const SignUp = lazy(() => import("@/pages/auth/signup"));
 const Account = lazy(() => import("@/pages/account"));
 const DashboardPage = lazy(() => import("@/pages/dashboard"));
@@ -54,7 +54,7 @@ export default function AppRouter() {
           element: <PackageDetailPage />,
         },
         {
-          path: "package/details",
+          path: "package/details/:package_id",
           element: <PackageDetail />,
         },
         {
@@ -66,7 +66,7 @@ export default function AppRouter() {
           element: <Account />,
         },
         {
-          path: "bill/detail",
+          path: "bill/detail/:code",
           element: <BillDetail />,
         },
         {
