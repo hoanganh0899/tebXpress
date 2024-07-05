@@ -1,5 +1,4 @@
-// src/components/tabs/HistoryTab.tsx
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Popover,
@@ -20,9 +19,12 @@ import {
   TransactionLogTypePingPong,
   TransactionLogTypeRefund,
   TransactionLogTypeTopup,
+  TransactionStatusFailure,
+  TransactionStatusProcess,
+  TransactionStatusSuccess,
 } from "@/constants/bill";
 
-interface Bill {
+type Bill = {
   id: number;
   created_at: string;
   updated_at: string;
@@ -31,10 +33,10 @@ interface Bill {
   extra_fee: number;
   status: number;
   user_id: number;
-  package: any; // Thay any bằng kiểu phù hợp nếu có thông tin chi tiết về package
-}
+  package: any;
+};
 
-interface BillTransaction {
+type BillTransaction = {
   id: number;
   created_at: string;
   updated_at: string;
@@ -46,9 +48,16 @@ interface BillTransaction {
   description: string;
   type: number;
   status: number;
-  user: any; // Thay any bằng kiểu phù hợp nếu có thông tin chi tiết về user
-  admin: any; // Thay any bằng kiểu phù hợp nếu có thông tin chi tiết về admin
-}
+  user: any;
+  admin: any;
+};
+
+type Status = {
+  [key: number]: string;
+  1: string;
+  2: string;
+  3: string;
+};
 function DatePickerWithRange({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
@@ -110,6 +119,16 @@ const HistoryTab: React.FC = () => {
   const typePay = TransactionLogTypePay;
   const typeRefund = TransactionLogTypeRefund;
   const typeAffiliate = TransactionLogAffiliate;
+
+  const Process = TransactionStatusProcess;
+  const Success = TransactionStatusSuccess;
+  const Failure = TransactionStatusFailure;
+
+  const statusText: Status = {
+    [Process]: "Pending",
+    [Success]: "Success",
+    [Failure]: "Failed",
+  };
 
   console.log("topup:", typeTopup);
 
@@ -185,12 +204,12 @@ const HistoryTab: React.FC = () => {
                 </div>
               </div>
               <div>
-                <div>
+                <div className="text-sm font-bold">
                   {item.type === typePayoneer || item.type === typePingPong
-                    ? `+ ${Math.abs(item.amount).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}`
-                    : `${item.type === typePay ? "-" : "+"} ${Math.abs(item.amount).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}`}
+                    ? `+ $ ${Math.abs(item.amount).toFixed(2)}`
+                    : ` ${item.type === typePay ? "-" : "+"} $${Math.abs(item.amount).toFixed(2)}`}
                 </div>
-                <span>{item.status}</span>
+                <span>{statusText[item.status]}</span>
               </div>
             </div>
           ))

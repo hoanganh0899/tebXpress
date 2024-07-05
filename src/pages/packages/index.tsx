@@ -12,7 +12,7 @@ export default function StudentPage() {
   const offset = (page - 1) * pageLimit;
   const { data, isLoading } = useGetListPackages(offset, pageLimit, code);
   const packages = data?.packages;
-  console.log("data:", packages);
+  // console.log("data:", packages);
   const totalUsers = data?.total_users; //1000
   const pageCount = Math.ceil(totalUsers / pageLimit);
 

@@ -1,6 +1,12 @@
-// PriceTable.tsx
+import { getListServices } from "@/services/settings/price";
 import React, { useState } from "react";
 
+type ListService = {
+  id: number;
+  name: string;
+  code: string;
+  prices?: null;
+};
 interface PriceRow {
   service: string;
   weight: string;
@@ -32,9 +38,22 @@ const saverData: PriceRow[] = [
 ];
 
 const PriceTable: React.FC = () => {
+  const [listService, setListService] = useState<ListService[]>([]);
   const [currentData, setCurrentData] = useState<PriceRow[]>(expressData);
   const [activeButton, setActiveButton] = useState<string>("Express");
 
+  React.useEffect(() => {
+    const fetchListService = async () => {
+      try {
+        const services = await getListServices();
+        setListService(services.services);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+
+    fetchListService();
+  }, []);
   const handleButtonClick = (service: string) => {
     switch (service) {
       case "Express":

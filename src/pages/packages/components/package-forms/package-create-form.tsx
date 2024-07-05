@@ -27,22 +27,21 @@ import { useState } from "react";
 const orderFormSchema = z.object({
   firstname: z.string().min(1, { message: "firstname is required" }),
   recipientName: z.string().min(1, { message: "recipientName is required" }),
-  invoiceName: z.string().min(1, { message: "invoiceName is required" }),
-  phone: z.string().min(1, { message: "phone is required" }),
-  orderValue: z.string().min(1, { message: "orderValue is required" }),
+  invoiceName: z.string(),
+  phone: z.string(),
+  orderValue: z.string(),
   address: z.string().min(1, { message: "address is required" }),
   city: z.string().min(1, { message: "City is required" }),
   state: z.string().min(1, { message: "State is required" }),
   country: z.string().min(1, { message: "Country is required" }),
   nameProduct: z.string().min(1, { message: "Product is required" }),
-  // confirmPassword: z
-  //   .string()
-  //   .min(1, { message: 'Confirm Password is required' })
+  postCode: z.string().min(1, { message: "Post code is required" }),
+  order_number: z.string().min(1, { message: "Order number is required" }),
+  weight: z.string().min(1, { message: "Weight is required" }),
+  length: z.string().min(1, { message: "Length is required" }),
+  width: z.string().min(1, { message: "Width is required" }),
+  height: z.string().min(1, { message: "Height is required" }),
 });
-// .refine((data) => data.password === data.confirmPassword, {
-//   message: 'Passwords must match',
-//   path: ['confirmPassword']
-// });
 
 type OrderFormSchemaType = z.infer<typeof orderFormSchema>;
 
@@ -158,19 +157,6 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
       <Heading title={"Add Order"} className="space-y-2 py-4 text-center" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          {/* <FormField
-            control={form.control}
-            name="file"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Profile</FormLabel>
-                <FormControl>
-                  <FileUpload onChange={field.onChange} value={field.value} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
           <div className="grid grid-cols-2 gap-x-8 max-md:grid-cols-1">
             <div className="border p-4 shadow-md">
               <strong className="">Thông tin người nhận</strong>
@@ -316,7 +302,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="city"
+                  name="postCode"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Mã bưu điện</FormLabel>
@@ -391,7 +377,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="invoiceName"
+                  name="order_number"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Mã đơn hàng</FormLabel>
@@ -408,7 +394,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="phone"
+                  name="weight"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Trọng lượng</FormLabel>
@@ -425,7 +411,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="orderValue"
+                  name="length"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Dài</FormLabel>
@@ -442,7 +428,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="address"
+                  name="width"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Rộng</FormLabel>
@@ -459,7 +445,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="address"
+                  name="height"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Cao</FormLabel>

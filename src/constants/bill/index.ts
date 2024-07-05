@@ -5,6 +5,10 @@ export const TransactionLogTypePayoneer = 5;
 export const TransactionLogTypePingPong = 6;
 export const TransactionLogAffiliate = 7;
 
+export const TransactionStatusProcess = 1;
+export const TransactionStatusSuccess = 2;
+export const TransactionStatusFailure = 3;
+
 export const TRANSACTION_STATUS = [
   {
     key: "1",

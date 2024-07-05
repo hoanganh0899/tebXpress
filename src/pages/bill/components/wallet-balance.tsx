@@ -17,7 +17,7 @@ const WalletBalance: React.FC<WalletBalanceProps> = ({
       <div className="flex flex-col items-center p-4 bg-blue-100 rounded-xl">
         <img src="http://localhost:6969/img/walletLg.f4c83d3a.svg" />
         <span className="text-gray-700">Số dư trong ví</span>
-        <span className="text-xl font-semibold">${balance.toFixed(2)}</span>
+        <span className="text-2xl font-bold">${balance.toFixed(2)}</span>
         <span className="text-lg text-gray-500">
           Điểm tích lũy: {points} điểm
         </span>

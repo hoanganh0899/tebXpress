@@ -64,7 +64,44 @@ export default function PackageDetail() {
 
   return (
     <div className="bg-[#f4f4f4] h-full relative">
-      <div className="mb-5 bg-[#fff] p-6">gdghfd</div>
+      <div className="mb-5 bg-[#fff] p-6 flex gap-5">
+        <div>
+          <div className="text-sm font-normal text-[#626363]">
+            Code package:
+          </div>
+          <span className="text-base font-bold">
+            {packageDetail?.code_package}
+          </span>
+        </div>
+        <div>
+          <div className="text-sm font-normal text-[#626363]">Service:</div>
+          <span className="font-medium text-sm tracking-[.2px] text-[#111212]">
+            {packageDetail?.service_name}
+          </span>
+        </div>
+        <div>
+          <div className="text-sm font-normal text-[#626363]">
+            Last mile tracking:
+          </div>
+          <span className="font-medium text-sm tracking-[.2px] text-[#111212]">
+            {packageDetail?.tracking_number}
+          </span>
+        </div>
+        <div>
+          <div className="text-sm font-normal text-[#626363]">
+            Created date:
+          </div>
+          <span className="font-medium text-sm tracking-[.2px] text-[#111212]">
+            {packageDetail?.created_at}
+          </span>
+        </div>
+        <div>
+          <div className="text-sm font-normal text-[#626363]">Status:</div>
+          <span className="font-medium text-sm tracking-[.2px] text-[#111212]">
+            {packageDetail?.status_string}
+          </span>
+        </div>
+      </div>
 
       <div className="px-5 grid grid-cols-3 gap-5">
         <div className="grid grid-cols-2 gap-5 col-span-2">
@@ -180,7 +217,7 @@ export default function PackageDetail() {
               Delivery fee:
             </div>
             <span className="total-number text-lg font-medium leading-[34px] text-[#111212] tracking-[.2px]">
-              $0.00
+              ${packageDetail?.shipping_fee}
             </span>
           </div>
           <div>

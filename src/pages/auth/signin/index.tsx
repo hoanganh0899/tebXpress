@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { userService } from "@/services/auth";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "@/routes/hooks";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -24,22 +25,20 @@ const LoginPage = () => {
 
   const handleLoginBtnClick = async () => {
     try {
-      setIsLogin(true);
       const loginResponse = await userService.login(
         email,
         password,
         verifyReCaptcha
       );
-      console.log("login:", loginResponse.access_token);
-      // console.log("recaptcha:", verifyReCaptcha);
+      console.log("login:", loginResponse);
+      console.log("token:", loginResponse.access_token);
 
-      setIsLogin(false);
-      if (!loginResponse.success || !loginResponse.data) {
-        toast.error(loginResponse.message);
+      if (!loginResponse.user) {
+        toast.error("Login failed");
         return;
       }
-      const { accessToken, user } = loginResponse.data;
-      // console.log("data:", loginResponse.data);
+      setIsLogin(true);
+
       useAuthStore
         .getState()
         .login(loginResponse.access_token, loginResponse.user);
