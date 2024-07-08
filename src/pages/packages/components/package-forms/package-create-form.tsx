@@ -23,19 +23,20 @@ import { z } from "zod";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { CirclePlus } from "lucide-react";
 import { useState } from "react";
+import { createPackage } from "@/services/packages";
 
 const orderFormSchema = z.object({
-  firstname: z.string().min(1, { message: "firstname is required" }),
-  recipientName: z.string().min(1, { message: "recipientName is required" }),
-  invoiceName: z.string(),
-  phone: z.string(),
-  orderValue: z.string(),
-  address: z.string().min(1, { message: "address is required" }),
+  service: z.string().min(1, { message: "Service is required" }),
+  recipient: z.string().min(1, { message: "recipient is required" }),
+  invoiceName: z.string().optional(),
+  phone: z.string().optional(),
+  address_2: z.string().optional(),
+  address_1: z.string().min(1, { message: "address_1 is required" }),
   city: z.string().min(1, { message: "City is required" }),
-  state: z.string().min(1, { message: "State is required" }),
-  country: z.string().min(1, { message: "Country is required" }),
-  nameProduct: z.string().min(1, { message: "Product is required" }),
-  postCode: z.string().min(1, { message: "Post code is required" }),
+  state_code: z.string().min(1, { message: "State is required" }),
+  country_code: z.string().min(1, { message: "Country is required" }),
+  detail: z.string().min(1, { message: "Product is required" }),
+  zipcode: z.string().min(1, { message: "Post code is required" }),
   order_number: z.string().min(1, { message: "Order number is required" }),
   weight: z.string().min(1, { message: "Weight is required" }),
   length: z.string().min(1, { message: "Length is required" }),
@@ -123,10 +124,14 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
     defaultValues: {},
   });
 
-  const onSubmit = (values: OrderFormSchemaType) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const onSubmit = async (values: OrderFormSchemaType) => {
+    try {
+      const result = await createPackage(values);
+      console.log("Order created successfully:", result);
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
+    console.log("value:", values);
   };
   const service = [
     { id: 1, name: "US" },
@@ -164,7 +169,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
               <div className="grid grid-cols-2 gap-x-5 gap-y-4 ">
                 <FormField
                   control={form.control}
-                  name="firstname"
+                  name="service"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Service</FormLabel>
@@ -200,7 +205,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="recipientName"
+                  name="recipient"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Tên người nhận</FormLabel>
@@ -251,13 +256,13 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="orderValue"
+                  name="address_1"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Giá trị đơn hàng (USD)</FormLabel>
+                      <FormLabel>Địa chỉ nhận hàng</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="đơn vị USD"
+                          placeholder="Chỉ gồm tên đường số nhà"
                           {...field}
                           className=" px-4 py-6 shadow-inner drop-shadow-xl"
                         />
@@ -268,13 +273,13 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="address"
+                  name="address_2"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Địa chỉ nhận hàng</FormLabel>
+                      <FormLabel>Address 2</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Chỉ gồm tên đường số nhà"
+                          placeholder="address"
                           {...field}
                           className=" px-4 py-6 shadow-inner drop-shadow-xl"
                         />
@@ -302,7 +307,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="postCode"
+                  name="zipcode"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Mã bưu điện</FormLabel>
@@ -319,7 +324,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="state"
+                  name="state_code"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Bang</FormLabel>
@@ -336,7 +341,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
                 />
                 <FormField
                   control={form.control}
-                  name="country"
+                  name="country_code"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Quốc gia</FormLabel>
@@ -360,7 +365,7 @@ const OrderCreateForm = ({ modalClose }: { modalClose: () => void }) => {
               <div className="grid grid-cols-2 gap-x-5 gap-y-4">
                 <FormField
                   control={form.control}
-                  name="nameProduct"
+                  name="detail"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Chi tiết sản phẩm</FormLabel>

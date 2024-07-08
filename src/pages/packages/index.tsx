@@ -8,9 +8,13 @@ export default function StudentPage() {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get("page") || 1);
   const pageLimit = Number(searchParams.get("limit") || 10);
-  const code = searchParams.get("search") || null;
+  const order_number = searchParams.get("search") || null;
   const offset = (page - 1) * pageLimit;
-  const { data, isLoading } = useGetListPackages(offset, pageLimit, code);
+  const { data, isLoading } = useGetListPackages(
+    offset,
+    pageLimit,
+    order_number
+  );
   const packages = data?.packages;
   // console.log("data:", packages);
   const totalUsers = data?.total_users; //1000

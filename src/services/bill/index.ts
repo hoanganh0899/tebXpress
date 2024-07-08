@@ -1,9 +1,7 @@
 import { CustomAxios } from "@/utils/customAxios";
 export async function getTransactions() {
   try {
-    const res = await CustomAxios.get(
-      `http://localhost:8888/v1/shipment/transactions`
-    );
+    const res = await CustomAxios.get(`/transactions`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -13,9 +11,7 @@ export async function getTransactions() {
 
 export async function getHoldings() {
   try {
-    const res = await CustomAxios.get(
-      `http://localhost:8888/v1/shipment/users`
-    );
+    const res = await CustomAxios.get(`/users`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -25,9 +21,7 @@ export async function getHoldings() {
 
 export async function getBillList() {
   try {
-    const res = await CustomAxios.get(
-      `http://localhost:8888/v1/shipment/bills/list`
-    );
+    const res = await CustomAxios.get(`/bills/list`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -46,9 +40,7 @@ export const getBillDetail = async (code: string) => {
 
 export async function getBillDetails(code: string) {
   try {
-    const res = await CustomAxios.get(
-      `http://localhost:8888/v1/shipment/bills/${code}`
-    );
+    const res = await CustomAxios.get(`/bills/${code}`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -58,9 +50,7 @@ export async function getBillDetails(code: string) {
 
 export async function getBillPackages(code: string) {
   try {
-    const res = await CustomAxios.get(
-      `http://localhost:8888/v1/shipment/bills/${code}/packages`
-    );
+    const res = await CustomAxios.get(`/bills/${code}/packages`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -70,9 +60,7 @@ export async function getBillPackages(code: string) {
 
 export async function getExtraFee(code: string) {
   try {
-    const res = await CustomAxios.get(
-      `http://localhost:8888/v1/shipment/bills/${code}/fees`
-    );
+    const res = await CustomAxios.get(`/bills/${code}/fees`);
     return res.data;
   } catch (error) {
     console.log(error);

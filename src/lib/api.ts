@@ -30,12 +30,12 @@ import axios from "axios";
 export async function getListPackages(
   offset: number,
   pageLimit: number,
-  code: string
+  order_number: string
 ) {
   try {
     const res = await axios.get(
       `http://localhost:8888/v1/shipment/packages?offset=${offset}&limit=${pageLimit}` +
-        (code ? `&search=${code}` : ""),
+        (order_number ? `&search=${order_number}` : ""),
       {
         headers: {
           Authorization:

@@ -70,19 +70,24 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "package_id",
     header: "Tracking code",
-    cell: ({ row }) => (
-      <div className="capitalize text-[#006a5e] font-medium">
-        <Link
-          to={{
-            pathname: `/package/details/${row.getValue("package_id")}`,
-          }}
-          className="text-no-underline"
-        >
-          LB027421200{row.getValue("package_id")}
-        </Link>
-      </div>
-    ),
+    cell: ({ row }) => {
+      const packageId = row.getValue("package_id");
+
+      return (
+        <div className="capitalize text-[#006a5e] font-medium">
+          <Link
+            to={{
+              pathname: `/package/details/${packageId}`,
+            }}
+            className="text-no-underline"
+          >
+            LB027421200{row.getValue("package_id")}
+          </Link>
+        </div>
+      );
+    },
   },
+
   {
     accessorKey: "created_at",
     header: ({ column }) => {

@@ -2,9 +2,7 @@ import { CustomAxios } from "@/utils/customAxios";
 
 export async function getPackagesHolding() {
   try {
-    const res = await CustomAxios.get(
-      `http://localhost:8888/v1/shipment/packages/holding`
-    );
+    const res = await CustomAxios.get(`/packages/holding`);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -14,12 +12,20 @@ export async function getPackagesHolding() {
 
 export async function getPackagesDetail(package_id: string) {
   try {
-    const res = await CustomAxios.get(
-      `http://localhost:8888/v1/shipment/packages/${package_id}`
-    );
+    const res = await CustomAxios.get(`/packages/${package_id}`);
     return res.data;
   } catch (error) {
     console.log(error);
     return error;
   }
 }
+
+export const createPackage = async (values: any) => {
+  try {
+    const response = await CustomAxios.post(`/packages/create`, values);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating order:", error);
+    throw error;
+  }
+};

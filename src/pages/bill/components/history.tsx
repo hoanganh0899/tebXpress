@@ -23,6 +23,7 @@ import {
   TransactionStatusProcess,
   TransactionStatusSuccess,
 } from "@/constants/bill";
+import { Link } from "react-router-dom";
 
 type Bill = {
   id: number;
@@ -53,10 +54,7 @@ type BillTransaction = {
 };
 
 type Status = {
-  [key: number]: string;
-  1: string;
-  2: string;
-  3: string;
+  [key: number]: { text: string; className: string };
 };
 function DatePickerWithRange({
   className,
@@ -125,12 +123,10 @@ const HistoryTab: React.FC = () => {
   const Failure = TransactionStatusFailure;
 
   const statusText: Status = {
-    [Process]: "Pending",
-    [Success]: "Success",
-    [Failure]: "Failed",
+    [Process]: { text: "Pending", className: "text-[#aaabab]" },
+    [Success]: { text: "Success", className: "text-[#48be78]" },
+    [Failure]: { text: "Failed", className: "text-[#f5222d]" },
   };
-
-  console.log("topup:", typeTopup);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -144,8 +140,6 @@ const HistoryTab: React.FC = () => {
 
     fetchData();
   }, []);
-
-  console.log("transaction:", transactions);
 
   return (
     <Card>
@@ -165,7 +159,10 @@ const HistoryTab: React.FC = () => {
         </div>
         {transactions!.length > 0 ? (
           transactions?.map((item, i) => (
-            <div className="flex justify-between transaction-info" key={i}>
+            <div
+              className="flex justify-between transaction-info border-b pb-5"
+              key={i}
+            >
               <div>
                 {/* {item.type === typeRefund || item.type === typeAffiliate ? (
                   <img src={require("@assets/img/rotate-left.svg")} alt="" />
@@ -182,21 +179,36 @@ const HistoryTab: React.FC = () => {
                   />
                 )} */}
                 <div>
-                  <div>
-                    {item.type === typeTopup ||
-                    item.type === typePayoneer ||
-                    item.type === typePingPong
-                      ? "Nạp tiền vào ví"
-                      : item.type === typeRefund || item.type === typeAffiliate
-                        ? "Hoàn tiền cho hóa đơn"
-                        : "Thanh toán hóa đơn"}
+                  <div className="flex gap-2 font-medium">
+                    <div>
+                      {item.type === typeTopup ||
+                      item.type === typePayoneer ||
+                      item.type === typePingPong
+                        ? "Nạp tiền vào ví"
+                        : item.type === typeRefund ||
+                            item.type === typeAffiliate
+                          ? "Hoàn tiền cho hóa đơn"
+                          : "Thanh toán hóa đơn"}
+                    </div>
+                    {item.bill && (
+                      <Link
+                        to={{
+                          pathname: `/bill/detail/${item.bill.code}`,
+                        }}
+                      >
+                        <div className="text-[#006a5e]">{item?.bill.code}</div>
+                      </Link>
+                    )}
                   </div>
-                  <span>
-                    {/* {formatWeekday(item.created_at)},{" "} */}
-                    {new Date(item.created_at).toLocaleDateString(
-                      "vi-VN"
-                    )} -{" "}
-                    {new Date(item.created_at).toLocaleTimeString("vi-VN", {
+                  <span className="text-sm text-[#626363]">
+                    {new Date(item.created_at).toLocaleDateString("us-US", {
+                      weekday: "long", // Adjust "long" to "short" or "narrow" for different weekday formats
+                      month: "numeric",
+                      day: "numeric",
+                      year: "numeric",
+                    })}{" "}
+                    -{" "}
+                    {new Date(item.created_at).toLocaleTimeString("us-US", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
@@ -206,10 +218,20 @@ const HistoryTab: React.FC = () => {
               <div>
                 <div className="text-sm font-bold">
                   {item.type === typePayoneer || item.type === typePingPong
-                    ? `+ $ ${Math.abs(item.amount).toFixed(2)}`
-                    : ` ${item.type === typePay ? "-" : "+"} $${Math.abs(item.amount).toFixed(2)}`}
+                    ? `+ $ ${Math.abs(item.amount)
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
+                    : ` ${item.type === typePay ? "-" : "+"} $${Math.abs(
+                        item.amount
+                      )
+                        .toFixed(2)
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                 </div>
-                <span>{statusText[item.status]}</span>
+                <span
+                  className={`float-right ${statusText[item.status].className} text-sm`}
+                >
+                  {statusText[item.status].text}
+                </span>
               </div>
             </div>
           ))

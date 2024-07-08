@@ -1,7 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPackagesDetail } from "@/services/packages";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { AuditLog } from "./components/audit-logs";
+import PackageTracking from "./components/track";
+import DeliveryLog from "./components/deliver-logs";
+import { ArrowUpRight, BadgeCheck } from "lucide-react";
+import {
+  EXTRA_FEE_CANCEL_LABEL,
+  PACKAGE_STATUS_CREATED_TEXT,
+} from "@/constants/packages";
 
 type PackageDetail = {
   id: number;
@@ -44,10 +53,10 @@ type PackageDetail = {
 
 export default function PackageDetail() {
   const { package_id } = useParams<{ package_id: string }>();
-  // console.log("code:", package_id);
   const [packageDetail, setPackageDetail] = useState<PackageDetail | null>(
     null
   );
+  const [displayDeliverDetail, setDisplayDeliverDetail] = useState(false);
 
   useEffect(() => {
     const fetchPackageDetail = async () => {
@@ -62,9 +71,15 @@ export default function PackageDetail() {
     fetchPackageDetail();
   }, [package_id]);
 
+  const current = {
+    tracking_number: packageDetail?.tracking_number,
+    service_name: packageDetail?.service_name,
+    country_code: packageDetail?.country_code,
+  };
+
   return (
     <div className="bg-[#f4f4f4] h-full relative">
-      <div className="mb-5 bg-[#fff] p-6 flex gap-5">
+      <div className="mb-5 bg-[#fff] p-6 flex gap-10">
         <div>
           <div className="text-sm font-normal text-[#626363]">
             Code package:
@@ -79,20 +94,32 @@ export default function PackageDetail() {
             {packageDetail?.service_name}
           </span>
         </div>
-        <div>
-          <div className="text-sm font-normal text-[#626363]">
-            Last mile tracking:
+        {packageDetail?.tracking_number ? (
+          <PackageTracking current={current} />
+        ) : (
+          <div>
+            <div className="text-sm font-normal text-[#626363]">
+              Last mile tracking:
+            </div>
+            <div className="flex hover:text-[#13c2c2]">
+              <span className="font-medium text-sm tracking-[.2px] text-[#111212] hover:text-[#13c2c2]">
+                {current?.tracking_number ? current.tracking_number : "N/A"}
+              </span>
+              {current?.tracking_number && <ArrowUpRight className="w-4 h-4" />}
+            </div>
           </div>
-          <span className="font-medium text-sm tracking-[.2px] text-[#111212]">
-            {packageDetail?.tracking_number}
-          </span>
-        </div>
+        )}
         <div>
           <div className="text-sm font-normal text-[#626363]">
             Created date:
           </div>
           <span className="font-medium text-sm tracking-[.2px] text-[#111212]">
-            {packageDetail?.created_at}
+            {packageDetail?.created_at
+              ? format(
+                  new Date(packageDetail.created_at),
+                  "dd/MM/yyyy - HH:mm:ss"
+                )
+              : "N/A"}
           </span>
         </div>
         <div>
@@ -111,31 +138,45 @@ export default function PackageDetail() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Full Name:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Full Name:
+                </div>
                 <div className="col-span-8"> {packageDetail?.recipient}</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Phone:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Phone:
+                </div>
                 <div className="col-span-8"> {packageDetail?.phone_number}</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Address:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Address:
+                </div>
                 <div className="col-span-8"> {packageDetail?.address_1}</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">City:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  City:
+                </div>
                 <div className="col-span-8"> {packageDetail?.city}</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">State Code:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  State Code:
+                </div>
                 <div className="col-span-8"> {packageDetail?.state_code}</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Zip Code:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Zip Code:
+                </div>
                 <div className="col-span-8"> {packageDetail?.zipcode}</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Country Code:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Country Code:
+                </div>
                 <div className="col-span-8"> {packageDetail?.country_code}</div>
               </div>
             </CardContent>
@@ -146,38 +187,52 @@ export default function PackageDetail() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Detail:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Detail:
+                </div>
                 <div className="col-span-8"> {packageDetail?.detail}</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Order number:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Order number:
+                </div>
                 <div className="col-span-8"> {packageDetail?.order_number}</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Weight:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Weight:
+                </div>
                 <div className="col-span-8"> {packageDetail?.weight} gram</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Length:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Length:
+                </div>
                 <div className="col-span-8"> {packageDetail?.length} cm</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Width:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Width:
+                </div>
                 <div className="col-span-8"> {packageDetail?.width} cm</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Height:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Height:
+                </div>
                 <div className="col-span-8"> {packageDetail?.height} cm</div>
               </div>
               <div className="grid grid-cols-12">
-                <div className="col-span-4">Battery:</div>
+                <div className="col-span-4 font-normal text-[#626363]">
+                  Battery:
+                </div>
                 <div className="col-span-8">
                   {packageDetail?.include_battery ? "Yes" : "No"}
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="">
             <CardHeader>
               <CardTitle className="border-b pb-3">Help & Claims:</CardTitle>
             </CardHeader>
@@ -194,15 +249,32 @@ export default function PackageDetail() {
         </div>
         <div className="">
           <Card className="h-full">
-            <CardHeader>
-              <CardTitle className="border-b pb-3">Order history</CardTitle>
+            <CardHeader className="">
+              <div>
+                <div className="flex gap-5 border-b">
+                  <button
+                    className={`pb-3 ${!displayDeliverDetail ? "font-bold border-b border-[#006a5e]" : ""}`}
+                    onClick={() => setDisplayDeliverDetail(false)}
+                  >
+                    Deliver order
+                  </button>
+                  <button
+                    className={`pb-3 ${displayDeliverDetail ? "font-bold border-b border-[#006a5e]" : ""}`}
+                    onClick={() => setDisplayDeliverDetail(true)}
+                  >
+                    Order history
+                  </button>
+                </div>
+              </div>
             </CardHeader>
-            <CardContent></CardContent>
+            <CardContent>
+              {displayDeliverDetail ? <AuditLog /> : <DeliveryLog />}
+            </CardContent>
           </Card>
         </div>
       </div>
 
-      <div className="bg-[#fff] p-6 absolute bottom-0 w-full">
+      <div className="bg-[#fff] p-6  bottom-0 w-full absolute">
         <div className="total float-right">
           <div className="total-title text-xs font-medium text-[#aaabab]">
             Cước tạm tính:

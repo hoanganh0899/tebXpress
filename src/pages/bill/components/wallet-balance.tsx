@@ -1,4 +1,5 @@
 // src/components/WalletBalance.tsx
+import { ArrowUpRight } from "lucide-react";
 import React from "react";
 
 interface WalletBalanceProps {
@@ -17,12 +18,19 @@ const WalletBalance: React.FC<WalletBalanceProps> = ({
       <div className="flex flex-col items-center p-4 bg-blue-100 rounded-xl">
         <img src="http://localhost:6969/img/walletLg.f4c83d3a.svg" />
         <span className="text-gray-700">Số dư trong ví</span>
-        <span className="text-2xl font-bold">${balance.toFixed(2)}</span>
+        <span className="text-2xl font-bold">
+          $
+          {Math.abs(balance)
+            .toFixed(2)
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+        </span>
         <span className="text-lg text-gray-500">
           Điểm tích lũy: {points} điểm
         </span>
         <a href="setting/coupon">
-          <span className="text-xs text-green-600">Sử dụng ➔</span>
+          <span className="text-xs text-green-600 flex">
+            <div>Sử dụng</div> <ArrowUpRight className="w-4 h-4" />
+          </span>
         </a>
       </div>
       <div className="flex flex-col items-center p-4 bg-[#fff7e6] rounded-xl">

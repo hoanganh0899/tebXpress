@@ -9,7 +9,8 @@ import {
 import { getBillDetails, getBillPackages, getExtraFee } from "@/services/bill";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 type BillDetail = {
   id: number;
@@ -86,6 +87,10 @@ const BillDetail: React.FC = () => {
     fetchExtraFee();
   }, [code]);
 
+  const toZeroIfSmall = (number: number, threshold = 1e-10) => {
+    return Math.abs(number) < threshold ? 0 : number;
+  };
+
   return (
     <>
       <div className="grid grid-cols-4 gap-5 bg-[#ddf3f4] p-4 rounded-lg mx-40 mt-10">
@@ -95,7 +100,11 @@ const BillDetail: React.FC = () => {
         </div>
         <div>
           <div className="text-[#626363]">Created at:</div>
-          <span className="text-[#007e78]">{billDetail?.created_at}</span>
+          <span className="text-[#007e78]">
+            {billDetail?.created_at
+              ? format(new Date(billDetail.created_at), "dd/MM/yyyy - HH:mm:ss")
+              : "N/A"}
+          </span>
         </div>
         <div>
           <div className="text-[#626363]">Total bill:</div>
@@ -118,24 +127,31 @@ const BillDetail: React.FC = () => {
               <TableHead className="text-right">Fee create</TableHead>
             </TableRow>
           </TableHeader>
-          {billPackage!.length > 0 ? (
+          {billPackage!.length > 0 &&
             billPackage?.map((item) => (
               <TableBody>
                 <TableRow>
-                  <TableCell className="font-medium text-[#006a5e] flex gap-2">
-                    {item.code} <ArrowUpRight className="w-4 h-4" />
+                  <Link to={`/package/details/${item.id}`}>
+                    <TableCell className="font-medium text-[#006a5e] flex gap-2">
+                      {item.code}
+                      <ArrowUpRight className="w-4 h-4" />
+                    </TableCell>
+                  </Link>
+                  <TableCell>
+                    {item.created_at
+                      ? format(
+                          new Date(item.created_at),
+                          "dd/MM/yyyy - HH:mm:ss"
+                        )
+                      : "N/A"}
                   </TableCell>
-                  <TableCell>{item.created_at}</TableCell>
                   <TableCell>{item.tracking_number}</TableCell>
                   <TableCell className="text-right">
-                    +${item.shipping_fee}
+                    +${toZeroIfSmall(item.shipping_fee).toFixed(2)}
                   </TableCell>
                 </TableRow>
               </TableBody>
-            ))
-          ) : (
-            <p className="mx-auto">No results</p>
-          )}
+            ))}
         </Table>
       </div>
 
@@ -154,25 +170,33 @@ const BillDetail: React.FC = () => {
               <TableHead className="text-right">Fee extra</TableHead>
             </TableRow>
           </TableHeader>
-          {extraFee!.length > 0 ? (
+          {extraFee!.length > 0 &&
             extraFee?.map((item) => (
               <TableBody>
                 <TableRow>
-                  <TableCell className="font-medium text-[#006a5e] flex gap-2">
-                    {item.package_code}
-                    <ArrowUpRight className="w-4 h-4" />
-                  </TableCell>
+                  <Link to={`/package/details/${item.package_id}`}>
+                    <TableCell className="font-medium text-[#006a5e] flex gap-2">
+                      {item.package_code}
+                      <ArrowUpRight className="w-4 h-4" />
+                    </TableCell>
+                  </Link>
                   <TableCell></TableCell>
-                  <TableCell>{item.created_at}</TableCell>
+                  <TableCell>
+                    {item.created_at
+                      ? format(
+                          new Date(item.created_at),
+                          "dd/MM/yyyy - HH:mm:ss"
+                        )
+                      : "N/A"}
+                  </TableCell>
                   <TableCell>{item.type_name}</TableCell>
                   <TableCell>{item.description}</TableCell>
-                  <TableCell className="text-right">+${item.amount}</TableCell>
+                  <TableCell className="text-right">
+                    +${toZeroIfSmall(item.amount).toFixed(2)}
+                  </TableCell>
                 </TableRow>
               </TableBody>
-            ))
-          ) : (
-            <p>No results</p>
-          )}
+            ))}
         </Table>
       </div>
     </>

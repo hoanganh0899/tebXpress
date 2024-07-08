@@ -4,6 +4,13 @@ import { DialogCloseButton } from "../component/ModalDetailCoupon";
 import { useState } from "react";
 import React from "react";
 import { getListCoupons } from "@/services/settings/coupon";
+import { format } from "date-fns";
+import {
+  COUPON_TYPE_DISCOUNT_MONEY,
+  COUPON_TYPE_DISCOUNT_PERCENT,
+  COUPON_TYPE_MONEY,
+  MAP_COUPON_TEXT,
+} from "@/constants/setting/coupon";
 
 type Coupon = {
   id: number;
@@ -62,18 +69,20 @@ const ListCoupon: React.FC = () => {
                   </span>
                 </div>
                 <h2 className="font-[700] text-[20px] leading-[28px] text-[#111212] my-2">
-                  Giảm ngay $12.00
+                  {`${MAP_COUPON_TEXT[item.type]} $${item?.value.toFixed(2)}`}
                 </h2>
+                {item.min_apply > 0 && (
+                  <p className="text-[14px] font-normal leading-[20px] mb-0 text-[#313232]">
+                    Giá trị áp dụng tối thiểu: ${item.min_apply}
+                  </p>
+                )}
                 <p className="text-[14px] font-normal leading-[20px] mb-0 text-[#313232]">
-                  Giá trị áp dụng tối thiểu: ${item.min_apply}
-                </p>
-                <p className="text-[14px] font-normal leading-[20px] mb-0 text-[#313232]">
-                  HSD: {item.end_date}
+                  HSD: {format(new Date(item.end_date), "dd/MM/yyyy")}
                 </p>
               </div>
               <div className="action text-right mr-6">
-                <Button>Buy</Button>
-                <DialogCloseButton />
+                <Button className="mb-3">Buy</Button>
+                <DialogCloseButton coupon={item} />
               </div>
             </div>
           ))

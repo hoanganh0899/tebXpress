@@ -6,15 +6,35 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { MAP_COUPON_TEXT } from "@/constants/setting/coupon";
+import { format } from "date-fns";
 import { CircleAlert, Ticket } from "lucide-react";
 
-export function DialogCloseButton() {
+type Coupon = {
+  id: number;
+  code: string;
+  point: number;
+  type: number;
+  min_apply: number;
+  max_apply: number;
+  start_date: string;
+  end_date: string;
+  value: number;
+  quantity: number;
+  used: number;
+};
+
+type DialogCloseButtonProps = {
+  coupon: Coupon;
+};
+
+export function DialogCloseButton({ coupon }: DialogCloseButtonProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="cursor-pointer flex">
+        <div className="cursor-pointer flex gap-1">
           <CircleAlert />
-          tim hieu them
+          <div>More</div>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
@@ -25,7 +45,7 @@ export function DialogCloseButton() {
             </div>
             <div className="header_title">
               <h2 className="font-[700] text-[20px] leading-[28px] text-[#111212] my-2">
-                Giảm ngay $12.00
+                {`${MAP_COUPON_TEXT[coupon.type]} $${coupon?.value.toFixed(2)}`}
               </h2>
               <span className="text-[12px] font-normal leading-[16px] mb-0 text-[#313232]">
                 Coupon giảm giá ($)
@@ -39,7 +59,7 @@ export function DialogCloseButton() {
               Code:
             </div>
             <div className="text-[14px] font-normal leading-[20px] mb-0 text-[#313232]">
-              mcbvdfg
+              {coupon.code}
             </div>
           </div>
           <div className="grid grid-cols-2 flex-1 gap-2 mb-3">
@@ -47,7 +67,7 @@ export function DialogCloseButton() {
               Start date:
             </div>
             <div className="text-[14px] font-normal leading-[20px] mb-0 text-[#313232]">
-              mcbvdfg
+              {format(new Date(coupon.start_date), "dd/MM/yyyy - HH:mm:ss")}
             </div>
           </div>
           <div className="grid grid-cols-2 flex-1 gap-2 mb-3">
@@ -55,7 +75,7 @@ export function DialogCloseButton() {
               End date:
             </div>
             <div className="text-[14px] font-normal leading-[20px] mb-0 text-[#313232]">
-              mcbvdfg
+              {format(new Date(coupon.end_date), "dd/MM/yyyy - HH:mm:ss")}
             </div>
           </div>
           <div className="grid grid-cols-2 flex-1 gap-2 mb-3">
@@ -63,7 +83,7 @@ export function DialogCloseButton() {
               Minimum Value:
             </div>
             <div className="text-[14px] font-normal leading-[20px] mb-0 text-[#313232]">
-              mcbvdfg
+              {coupon.min_apply}
             </div>
           </div>
           <div className="grid grid-cols-2 flex-1 gap-2 mb-3">
@@ -71,15 +91,15 @@ export function DialogCloseButton() {
               Discount Value:
             </div>
             <div className="text-[14px] font-normal leading-[20px] mb-0 text-[#313232]">
-              mcbvdfg
+              {coupon.value}
             </div>
           </div>
           <div className="grid grid-cols-2 flex-1 gap-2 mb-3">
             <div className="text-[14px] font-normal leading-[20px] mb-0 text-[#898a8a]">
-              Used:Used:
+              Used:
             </div>
             <div className="text-[14px] font-normal leading-[20px] mb-0 text-[#313232]">
-              mcbvdfg
+              {coupon.used}
             </div>
           </div>
           <div className="grid grid-cols-2 flex-1 gap-2 mb-3">

@@ -12,6 +12,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function UserNav() {
+  const handleLogout = () => {
+    localStorage.removeItem("auth-storage");
+
+    window.location.href = "/login";
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -43,7 +49,7 @@ export default function UserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => (window.location.href = "/login")}>
+        <DropdownMenuItem onClick={handleLogout}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
